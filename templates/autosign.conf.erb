@@ -1,0 +1,9 @@
+# autosign configuration is managed by Puppet
+# manual modifications to this file will be overrwitten
+<% @settings.each do |section, contents| -%>
+
+[<%= section%>]
+<% contents.each do |name, value| -%>
+<%= name%> = <%= value%>
+<% end -%>
+<% end -%>
