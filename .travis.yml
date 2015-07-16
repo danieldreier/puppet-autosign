@@ -5,6 +5,7 @@ sudo: false
 before_install: rm Gemfile.lock || true
 rvm:
   - 1.9.3
+  - jruby-19mode
   - 2.0.0
   - 2.1.0
 script: bundle exec rake test
