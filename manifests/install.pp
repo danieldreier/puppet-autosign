@@ -10,11 +10,16 @@ class autosign::install {
     provider => $::autosign::gem_provider,
   }
 
+  $dir_ensure = $::autosign::ensure ? {
+      /(absent|purged)/ => 'absent',
+      default           => 'directory',
+  }
+
   # the autosign key journal stores previously-used tokens to prevent re-use
   file {$::autosign::journalpath:
-    ensure  => directory,
-    mode  => '0750',
-    owner   => $::autosign::user,
-    group   => $::autosign::group,
+    ensure => $dir_ensure,
+    mode   => '0750',
+    owner  => $::autosign::user,
+    group  => $::autosign::group,
   }
 }

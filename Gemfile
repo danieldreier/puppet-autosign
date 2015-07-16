@@ -23,3 +23,5 @@ group :system_tests do
   gem "beaker"
   gem "beaker-rspec"
 end
+
+gem 'autosign'

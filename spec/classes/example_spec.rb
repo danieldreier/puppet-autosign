@@ -29,7 +29,6 @@ PuppetSpecFacts.facts_for_platform_by_name(["Debian_wheezy_7.7_amd64_3.7.2_struc
       it { is_expected.to contain_package('autosign').with_ensure('latest') }
       it { is_expected.to contain_file('/etc/autosign.conf') }
       it { is_expected.to contain_file('/var/lib/autosign') }
-      
     end
 
     context 'unsupported operating system' do
