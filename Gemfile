@@ -24,4 +24,4 @@ group :system_tests do
   gem "beaker-rspec"
 end
 
-gem 'autosign'
+gem 'autosign', '>= 0.0.8'

@@ -49,7 +49,7 @@ describe 'autosign class' do
 
     describe file('/etc/autosign.conf') do
       it { should be_file }
-      it { should contain '[jwt_token]' }
+      it { should contain 'jwt_token' }
       it { should contain 'hunter2' }
       it { should contain '/tmp/autosign.log' }
     end
@@ -59,26 +59,4 @@ describe 'autosign class' do
     end
   end
 
-  context 'ensure absent' do
-    # Using puppet_apply as a helper
-    it 'should work idempotently with no errors' do
-      pp = <<-EOS
-      class { ::autosign:
-        ensure => 'absent'
-      }
-      EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes  => true)
-    end
-
-    describe package('autosign') do
-      it { is_expected.not_to be_installed }
-    end
-
-    describe file('/etc/autosign.conf') do
-      it { is_expected.not_to exist }
-    end
-  end
 end

@@ -1,9 +1,5 @@
 # autosign configuration is managed by Puppet
 # manual modifications to this file will be overrwitten
-<% @settings.each do |section, contents| -%>
+<% require 'yaml' -%>
+<%= @settings.to_yaml %>
 
-[<%= section%>]
-<% contents.each do |name, value| -%>
-<%= name%> = <%= value%>
-<% end -%>
-<% end -%>
