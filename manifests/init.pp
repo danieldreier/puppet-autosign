@@ -7,9 +7,12 @@
 # ----------
 #
 # * `package_name`
-#   Name of the gem to install. Defaults to "autosign" and there's probably no reason to override it.
+#   Name of the gem to install. Defaults to "autosign" and there's probably no
+#   reason to override it.
+#
 # * `ensure`
-#   Ensure parameter on the package to install. Set to "present", "latest", "absent", or a specific gem version.
+#   Ensure parameter on the package to install. Set to "present", "latest",
+#   "absent", or a specific gem version.
 #
 class autosign (
   $package_name = $::autosign::params::package_name,

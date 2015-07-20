@@ -12,7 +12,7 @@ class autosign::config {
 
   file {$::autosign::configfile:
     ensure  => $config_ensure,
-    mode  => '0640',
+    mode    => '0640',
     content => template('autosign/autosign.conf.erb'),
     owner   => $::autosign::user,
     group   => $::autosign::group,
