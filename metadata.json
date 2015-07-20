@@ -15,6 +15,14 @@
   ],
   "operatingsystem_support": [
     {
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "10.1",
+        "10.0",
+        "9.3"
+      ]
+    },
+    {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "6",
@@ -24,7 +32,6 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "5",
         "6",
         "7"
       ]
