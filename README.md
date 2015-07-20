@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/danieldreier/puppet-autosign.svg?branch=master)](https://travis-ci.org/danieldreier/puppet-autosign)
+[![Build Status](https://travis-ci.org/danieldreier/puppet-autosign.svg?branch=master)](https://travis-ci.org/danieldreier/puppet-autosign) [![Puppet Forge](https://img.shields.io/puppetforge/dt/danieldreier/autosign.svg)](https://forge.puppetlabs.com/danieldreier/autosign) [![Puppet Forge](https://img.shields.io/puppetforge/v/danieldreier/autosign.svg)](https://forge.puppetlabs.com/danieldreier/autosign)
 
 ## Overview
 
