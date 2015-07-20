@@ -52,14 +52,13 @@ class autosign::params {
   $settings = {
     'general' =>
       {
-        'loglevel'       => 'INFO',
-        'token_validity' => 7200,
-        'logfile'        => '/var/log/autosign.log',
+        'loglevel' => 'INFO',
+        'logfile'  => '/var/log/autosign.log',
       },
     'jwt_token' =>
     {
-      'validity' => 7200,
-      'journalfile'    => "${journalpath}/autosign.journal",
+      'validity'    => 7200,
+      'journalfile' => "${journalpath}/autosign.journal",
     }
   }
 }
