@@ -30,23 +30,27 @@ class autosign::params {
   if str2bool($::is_pe) {
     #Assuming PE 3
     $gem_provider = 'pe_gem'
-    $group,$user = 'pe-puppet'
+    $group = 'pe-puppet'
+    $user = 'pe-puppet'
   } else {
     if $::puppetversion and versioncmp($::puppetversion, '4.0.0') >= 0 {
       if $::pe_server_version
       {
         #Assuming PE 4+
       $gem_provider = 'puppet_gem'
-      $group,$user = 'pe-puppet'
+      $group = 'pe-puppet'
+      $user = 'pe-puppet'
       } else {
         #Assume Open Source Pupppet 4
         $gem_provider = 'puppet_gem'
-        $user,$group = 'puppet'
+        $user = 'puppet'
+        $group = 'puppet'
       }
     } else {
       #Assume Open Source Puppet 3
       $gem_provider = 'gem'
-      $user,$group = 'puppet'
+      $user = 'puppet'
+      $group = 'puppet'
     }
   }
 
