@@ -27,26 +27,27 @@ class autosign::params {
     }
   }
 
-  case $::puppetversion {
-    /^3\.\d\.\d$/: {
+  if str2bool($::is_pe) {
+    #Assuming PE 3
+    $gem_provider = 'pe_gem'
+    $group,$user = 'pe-puppet'
+  } else {
+    if $::puppetversion and versioncmp($::puppetversion, '4.0.0') >= 0 {
+      if $::pe_server_version
+      {
+        #Assuming PE 4+
+      $gem_provider = 'puppet_gem'
+      $group,$user = 'pe-puppet'
+      } else {
+        #Assume Open Source Pupppet 4
+        $gem_provider = 'puppet_gem'
+        $user,$group = 'puppet'
+      }
+    } else {
+      #Assume Open Source Puppet 3
       $gem_provider = 'gem'
-      $user = 'puppet'
-      $group = 'puppet'
+      $user,$group = 'puppet'
     }
-    /^4\.\d\.\d$/: {
-      $gem_provider = 'puppet_gem'
-      $user = 'puppet'
-      $group = 'puppet'
-    }
-    /^.*\(Puppet Enterprise 3\.\d+\.\d+\)$/: {
-      $gem_provider = 'pe_gem'
-      $group = 'pe-puppet'
-    }
-    /^.*\(Puppet Enterprise \d+\.\d+\.\d+\)$/: {
-      $gem_provider = 'puppet_gem'
-      $group = 'pe-puppet'
-    }
-    default: { fail("::autosign::params cannot determine which gem provider to use with puppet version '${::puppetversion}'") }
   }
 
   $settings = {
