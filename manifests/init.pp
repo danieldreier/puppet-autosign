@@ -28,4 +28,5 @@ class autosign (
 
   Class['::autosign::install'] ->
   Class['::autosign::config']
+
 }

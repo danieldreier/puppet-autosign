@@ -4,13 +4,13 @@ shared_examples_for "base case" do
   it { is_expected.to compile.with_all_deps }
 
   it { is_expected.to contain_class('autosign::params') }
-  it { is_expected.to contain_class('autosign::install').that_comes_before('autosign::config') }
+  it { is_expected.to contain_class('autosign::install').that_comes_before('Class[autosign::config]') }
   it { is_expected.to contain_class('autosign::config') }
 end
 
-PuppetSpecFacts.facts_for_platform_by_name(["Debian_wheezy_7.7_amd64_3.7.2_structured"]).each do |name, facthash|
+on_supported_os.each do | os,facts|
   describe 'autosign' do
-    let(:facts) { facthash }
+    let(:facts) { facts}
     context "autosign class without any parameters" do
       let(:params) {{ }}
 

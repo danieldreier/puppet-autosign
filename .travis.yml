@@ -2,33 +2,25 @@
 language: ruby
 cache: bundler
 sudo: false
-before_install:
-  - rm Gemfile.lock || true
-  - gem install bundler --pre
+before_install: rm Gemfile.lock || true
 rvm:
-  - 1.9.3
-  - jruby-19mode
-  - 2.0.0
-  - 2.1.0
-  - 2.2.0
-  - 2.3.0
+#  - 1.9.3
+#  - jruby-19mode
+#  - 2.0.0
+#  - 2.1.0
+  - 2.2.3
 script: bundle exec rake test
 env:
-  - PUPPET_VERSION="~> 3.3.0"
-  - PUPPET_VERSION="~> 3.4.0"
-  - PUPPET_VERSION="~> 3.5.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 3.6.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 3.7.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 3.8.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
-  - PUPPET_VERSION="~> 4.0.0" STRICT_VARIABLES=yes
+#  - PUPPET_VERSION="~> 3.3.0"
+#  - PUPPET_VERSION="~> 3.4.0"
+#  - PUPPET_VERSION="~> 3.5.0" STRICT_VARIABLES=yes
+#  - PUPPET_VERSION="~> 3.6.0" STRICT_VARIABLES=yes
+#  - PUPPET_VERSION="~> 3.7.0" STRICT_VARIABLES=yes
+#  - PUPPET_VERSION="~> 3.8.1" STRICT_VARIABLES=yes FUTURE_PARSER=yes
+  - PUPPET_VERSION="~> 4.0" STRICT_VARIABLES=yes
 matrix:
-  #Exclusions according to https://docs.puppet.com/guides/platforms.html#ruby-versions
-  exclude:
-    #Ruby 2.1.0
-  - rvm: 2.1.0
-    env: PUPPET_VERSION="~> 3.3.0"
-  - rvm: 2.1.0
-    env: PUPPET_VERSION="~> 3.4.0"
+#  exclude:
+  #
 
     #Ruby 2.2.0
   - rvm: 2.2.0
