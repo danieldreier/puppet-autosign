@@ -10,7 +10,9 @@ end
 
 describe 'autosign' do
   on_supported_os.each do | os,facts|
-    let(:facts) { facts}
+    let(:facts) do
+      facts
+    end
     context "autosign class without any parameters" do
       let(:params) {{ }}
 
