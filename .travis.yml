@@ -8,7 +8,7 @@ rvm:
 #  - jruby-19mode
 #  - 2.0.0
 #  - 2.1.0
-  - 2.2.3
+  - 2.3
 script: bundle exec rake test
 env:
 #  - PUPPET_VERSION="~> 3.3.0"
