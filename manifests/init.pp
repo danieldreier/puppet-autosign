@@ -27,6 +27,5 @@ class autosign (
   validate_string($ensure)
 
   Class['::autosign::install'] ->
-  Class['::autosign::config'] ->
-  Class['::autosign']
+  Class['::autosign::config']
 }
