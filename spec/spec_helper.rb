@@ -6,5 +6,6 @@ RSpec.configure do |c|
   c.default_facts = {
     is_pe: false,
     puppetversion: Puppet.version,
+    pe_server_version:,
   }
 end
