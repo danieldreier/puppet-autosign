@@ -8,8 +8,8 @@ shared_examples_for "base case" do
   it { is_expected.to contain_class('autosign::config') }
 end
 
-on_supported_os.each do | os,facts|
-  describe 'autosign' do
+describe 'autosign' do
+  on_supported_os.each do | os,facts|
     let(:facts) { facts}
     context "autosign class without any parameters" do
       let(:params) {{ }}

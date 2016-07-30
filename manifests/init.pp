@@ -26,7 +26,7 @@ class autosign (
   validate_string($package_name)
   validate_string($ensure)
 
-  Class['::autosign::install'] ->
-  Class['::autosign::config']
+  class {'::autosign::install': } ->
+  class{'::autosign::config': }
 
 }
