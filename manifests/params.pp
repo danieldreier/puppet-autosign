@@ -37,7 +37,7 @@ class autosign::params {
       if $::pe_server_version
       {
         #Assuming PE 4+
-      $gem_provider = 'puppet_gem'
+      $gem_provider = 'puppetserver_gem'
       $group = 'pe-puppet'
       $user = 'pe-puppet'
       } else {
