@@ -33,7 +33,7 @@ class autosign::params {
       $user = 'puppet'
       $group = 'puppet'
     }
-    /^4\.\d\.\d$/: {
+    /^4\.\d+\.\d+$/: {
       $gem_provider = 'puppet_gem'
       $user = 'puppet'
       $group = 'puppet'
