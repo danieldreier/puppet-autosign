@@ -21,6 +21,7 @@ class autosign (
   $user         = $::autosign::params::user,
   $group        = $::autosign::params::group,
   $journalpath  = $::autosign::params::journalpath,
+  $gem_provider = $::autosign::params::gem_provider,
   $settings     = {},
 ) inherits ::autosign::params {
   validate_string($package_name)
