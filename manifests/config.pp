@@ -3,19 +3,22 @@
 # This class is called from autosign for service config.
 #
 class autosign::config {
-  $config_ensure = $::autosign::ensure ? {
+  $_config_ensure = $autosign::ensure ? {
       /(absent|purged)/ => 'absent',
       default           => 'present',
   }
 
-  $settings = deep_merge($::autosign::params::settings, $::autosign::settings)
-
   file {$::autosign::configfile:
-    ensure  => $config_ensure,
+    ensure  => $_config_ensure,
     mode    => '0640',
-    content => template('autosign/autosign.conf.erb'),
-    owner   => $::autosign::user,
-    group   => $::autosign::group,
+    content => epp('autosign/autosign.conf.epp', {
+      'loglevel'    => $autosign::settings_loglevel,
+      'logfile'     => $autosign::settings_logfile,
+      'validity'    => $autosign::settings_validity,
+      'journalpath' => $autosign::journalpath,
+      'journalfile' => $autosign::settings_journalfile,
+    }),
+    owner   => $autosign::user,
+    group   => $autosign::group,
   }
-
 }

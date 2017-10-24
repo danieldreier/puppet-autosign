@@ -15,17 +15,25 @@
 #   "absent", or a specific gem version.
 #
 class autosign (
-  $package_name = $::autosign::params::package_name,
-  $configfile   = $::autosign::params::configfile,
-  $ensure       = $::autosign::params::ensure,
-  $user         = $::autosign::params::user,
-  $group        = $::autosign::params::group,
-  $journalpath  = $::autosign::params::journalpath,
-  $gem_provider = $::autosign::params::gem_provider,
-  $settings     = {},
-) inherits ::autosign::params {
-  validate_string($package_name)
-  validate_string($ensure)
+  String               $package_name,
+  Stdlib::Absolutepath $configfile,
+  String               $ensure,
+  String               $user,
+  String               $group,
+  Stdlib::Absolutepath $journalpath,
+  String               $gem_provider,
+  String               $settings_loglevel,
+  Stdlib::Absolutepath $settings_logfile,
+  Integer              $settings_validity,
+  String               $settings_journalfile,
+) {
+  if $facts['pe_build'] {
+    $user  = 'pe-puppet'
+    $group = 'pe-puppet'
+  } else {
+    $user  = 'puppet'
+    $group = 'puppet'
+  }
 
   contain ::autosign::install
   contain ::autosign::config

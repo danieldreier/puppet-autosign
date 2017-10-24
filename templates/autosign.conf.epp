@@ -1,0 +1,9 @@
+# autosign configuration is managed by Puppet
+# manual modifications to this file will be overrwitten
+---
+general:
+  loglevel: '<%= $loglevel %>'
+  logfile: '<%= $logfile %>'
+jwt_token:
+  validity: <%= $validity %>
+  journalfile: '<%= $journalpath %>/<%= $journalfile %>'

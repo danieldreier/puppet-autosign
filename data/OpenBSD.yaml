@@ -1,0 +1,3 @@
+---
+autosign::configfile   : '/usr/local/etc/autosign.conf'
+autosign::journalpath  : '/var/autosign'
