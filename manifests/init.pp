@@ -15,13 +15,11 @@
 #   "absent", or a specific gem version.
 #
 class autosign (
-  String               $package_name,
   Stdlib::Absolutepath $configfile,
   String               $ensure,
   String               $user,
   String               $group,
   Stdlib::Absolutepath $journalpath,
-  String               $gem_provider,
   String               $settings_loglevel,
   Stdlib::Absolutepath $settings_logfile,
   Integer              $settings_validity,

@@ -3,10 +3,18 @@
 # This class is called from autosign for install.
 #
 class autosign::install inherits autosign {
-  # install the autosign gem
-  package { $autosign::package_name:
-    ensure   => $autosign::ensure,
-    provider => $autosign::gem_provider,
+  # install the autosign gem for both the agent and puppetserver
+  package {
+    default:
+      ensure => $autosign::ensure,
+      name   => 'autosign',
+    ;
+    'autosign via puppet_gem':
+      provider => 'puppet_gem',
+    ;
+    'autosign via puppetserver_gem':
+      provider => 'puppuppetserver_gempet_gem',
+    ;
   }
 
   $_dir_ensure = $autosign::ensure ? {
