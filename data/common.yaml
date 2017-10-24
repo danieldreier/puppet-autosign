@@ -1,0 +1,8 @@
+---
+autosign::configfile           : '/etc/autosign.conf'
+autosign::ensure               : 'present'
+autosign::journalpath          : '/var/lib/autosign'
+autosign::settings_loglevel    : 'INFO'
+autosign::settings_logfile     : '/var/log/autosign.log'
+autosign::settings_validity    : 7200
+autosign::settings_journalfile : 'autosign.journal'
