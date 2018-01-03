@@ -1,0 +1,20 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "Generates an autosign token for embedding into CSR attributes",
+  "input_method": "environment",
+  "parameters": {
+    "reusable": {
+      "description": "Generate a reusable token; default is to generate one-time tokens",
+      "type": "String"
+    },
+    "validfor": {
+      "description": "autosign token validity period (default: 7200)",
+      "type": "String"
+    },
+    "certname": {
+      "description": "Certname/regex of the newly created machine",
+      "type": "String"
+    }
+  }
+}
