@@ -74,7 +74,7 @@ class { ::autosign:
 
 ## Usage
 
-The `gen_autosign_token` function allows you to generate temporary autosign 
+The `gen_autosign_token` function allows you to generate temporary autosign
 tokens in puppet. The syntax is:
 
 ```puppet
@@ -105,6 +105,12 @@ you should use regex matching to enforce certname policies rather than
 attempting to restrict access to infrastructure by certname. A host named
 `foo.example.com` can request a certificate for `bar.example.com` and the
 master does not care.
+
+### Generating tokens using tasks
+
+This module comes with the `generate_token` task which uses the `autosign generate` command to generate new tokens. This task is designed to make integration with automated and manual provisioning methods easier for Puppet Enterprise users as humans or services can make a request for a token using their LDAP integrated user account instead of having to SSH in to the Puppet Master. Access to this task can be controlled via the Puppet Enterprise RBAC mechanism allowing for much easier control of user access.
+
+Users wishing to generate tokens this way should run the task against the Puppet master and will receive the signing token as the result of the task. Running the `generate_token` task against any other node will fail.
 
 ## Development
 
