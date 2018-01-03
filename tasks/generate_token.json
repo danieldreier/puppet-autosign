@@ -6,11 +6,11 @@
   "parameters": {
     "reusable": {
       "description": "Generate a reusable token; default is to generate one-time tokens",
-      "type": "String"
+      "type": "Optional[Boolean]"
     },
     "validfor": {
       "description": "autosign token validity period (default: 7200)",
-      "type": "String"
+      "type": "Optional[Integer]"
     },
     "certname": {
       "description": "Certname/regex of the newly created machine",
