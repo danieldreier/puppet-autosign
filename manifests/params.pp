@@ -27,24 +27,31 @@ class autosign::params {
     }
   }
 
-  case $::puppetversion {
+  case pick($::pe_build, $::puppetversion) {
     /^3\.\d\.\d$/: {
       $gem_provider = 'gem'
-      $user = 'puppet'
-      $group = 'puppet'
+      $user         = 'puppet'
+      $group        = 'puppet'
     }
     /^[45]\.\d+\.\d+$/: {
       $gem_provider = 'puppet_gem'
-      $user = 'puppet'
-      $group = 'puppet'
+      $user         = 'puppet'
+      $group        = 'puppet'
     }
     /^.*\(Puppet Enterprise 3\.\d+\.\d+\)$/: {
       $gem_provider = 'pe_gem'
-      $group = 'pe-puppet'
+      $user         = 'pe-puppet'
+      $group        = 'pe-puppet'
     }
     /^.*\(Puppet Enterprise \d+\.\d+\.\d+\)$/: {
       $gem_provider = 'puppet_gem'
-      $group = 'pe-puppet'
+      $user         = 'pe-puppet'
+      $group        = 'pe-puppet'
+    }
+    /^\d{4}\.\d+\.\d+$/ {
+      $gem_provider = 'puppet_gem'
+      $user         = 'pe-puppet'
+      $group        = 'pe-puppet'
     }
     default: { fail("::autosign::params cannot determine which gem provider to use with puppet version '${::puppetversion}'") }
   }
