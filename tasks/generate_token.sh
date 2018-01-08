@@ -2,6 +2,7 @@
 
 # Locations to look for the autosign executable
 executables=(
+    '/opt/puppetlabs/puppetserver/bin/autosign'
     '/opt/puppetlabs/puppet/bin/autosign'
     '/opt/puppet/bin/autosign'
     '/usr/local/bin/autosign'
