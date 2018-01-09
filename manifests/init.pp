@@ -15,14 +15,16 @@
 #   "absent", or a specific gem version.
 #
 class autosign (
-  $package_name = $::autosign::params::package_name,
-  $configfile   = $::autosign::params::configfile,
-  $ensure       = $::autosign::params::ensure,
-  $user         = $::autosign::params::user,
-  $group        = $::autosign::params::group,
-  $journalpath  = $::autosign::params::journalpath,
-  $gem_provider = $::autosign::params::gem_provider,
-  $settings     = {},
+  $package_name       = $::autosign::params::package_name,
+  $configfile         = $::autosign::params::configfile,
+  $ensure             = $::autosign::params::ensure,
+  $user               = $::autosign::params::user,
+  $group              = $::autosign::params::group,
+  $journalpath        = $::autosign::params::journalpath,
+  $gem_provider       = $::autosign::params::gem_provider,
+  $manage_journalfile = $::autosign::params::manage_journalfile,
+  $manage_logfile     = $::autosign::params::manage_logfile,
+  $settings           = {},
 ) inherits ::autosign::params {
   validate_string($package_name)
   validate_string($ensure)

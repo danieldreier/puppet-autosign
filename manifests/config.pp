@@ -18,4 +18,21 @@ class autosign::config {
     group   => $::autosign::group,
   }
 
+  if $::autosign::manage_logfile {
+    file {$::autosign::settings['general']['logfile']:
+      ensure => 'file',
+      mode   => '0640',
+      owner  => $::autosign::user,
+      group  => $::autosign::group,
+    }
+  }
+
+  if $::autosign::manage_logfile {
+    file {$::autosign::settings['jwt_token']['journalfile']:
+      ensure => 'file',
+      mode   => '0640',
+      owner  => $::autosign::user,
+      group  => $::autosign::group,
+    }
+  }
 }
