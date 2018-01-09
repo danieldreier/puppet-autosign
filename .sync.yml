@@ -1,0 +1,7 @@
+---
+# Most of the content in the moduyle is created by the `pdk convert` command.
+# This file is where we can define overrides to that static template
+Gemfile:
+  required:
+    ':development':
+      - gem: autosign

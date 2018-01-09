@@ -40,7 +40,7 @@ class autosign::params {
       $gem_provider   = 'pe_gem'
       $user           = 'pe-puppet'
       $group          = 'pe-puppet'
-      $pe_journalpath = '/opt/puppetlabs/server'
+      $pe_journalpath = '/opt/puppetlabs/server/autosign'
       $pe_configpath  = '/etc/puppetlabs/puppetserver'
       $pe_logpath     = '/var/log/puppetlabs/puppetserver'
     }
@@ -48,7 +48,7 @@ class autosign::params {
       $gem_provider   = 'puppet_gem'
       $user           = 'pe-puppet'
       $group          = 'pe-puppet'
-      $pe_journalpath = '/opt/puppetlabs/server'
+      $pe_journalpath = '/opt/puppetlabs/server/autosign'
       $pe_configpath  = '/etc/puppetlabs/puppetserver'
       $pe_logpath     = '/var/log/puppetlabs/puppetserver'
     }
@@ -56,7 +56,7 @@ class autosign::params {
       $gem_provider   = 'puppet_gem'
       $user           = 'pe-puppet'
       $group          = 'pe-puppet'
-      $pe_journalpath = '/opt/puppetlabs/server'
+      $pe_journalpath = '/opt/puppetlabs/server/autosign'
       $pe_configpath  = '/etc/puppetlabs/puppetserver'
       $pe_logpath     = '/var/log/puppetlabs/puppetserver'
     }
@@ -64,7 +64,7 @@ class autosign::params {
   }
 
   $ensure             = 'present'
-  $base_logpath       = '/var/log/'
+  $base_logpath       = '/var/log'
   $logpath            = pick($pe_logpath,     $base_logpath)
   $journalpath        = pick($pe_journalpath, $base_journalpath)
   $configpath         = pick($pe_configpath,  $base_configpath)

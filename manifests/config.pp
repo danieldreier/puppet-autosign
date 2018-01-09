@@ -5,7 +5,7 @@
 class autosign::config {
   $config_ensure = $::autosign::ensure ? {
       /(absent|purged)/ => 'absent',
-      default           => 'present',
+      default           => 'file',
   }
 
   $settings = deep_merge($::autosign::params::settings, $::autosign::settings)
@@ -19,7 +19,7 @@ class autosign::config {
   }
 
   if $::autosign::manage_logfile {
-    file {$::autosign::settings['general']['logfile']:
+    file {$settings['general']['logfile']:
       ensure => 'file',
       mode   => '0640',
       owner  => $::autosign::user,
@@ -28,7 +28,7 @@ class autosign::config {
   }
 
   if $::autosign::manage_logfile {
-    file {$::autosign::settings['jwt_token']['journalfile']:
+    file {$settings['jwt_token']['journalfile']:
       ensure => 'file',
       mode   => '0640',
       owner  => $::autosign::user,
