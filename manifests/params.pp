@@ -25,7 +25,8 @@ class autosign::params {
     }
   }
 
-  case pick($::pe_server_version, $::pe_build, $::puppetversion) {
+  $version = pick($::pe_server_version, $::pe_build, $::puppetversion)
+  case $version {
     /^[45]\.\d+\.\d+$/: {
       # Normal versioning, assumed that the pe_build and pe_server_version don't
       # exist
@@ -40,7 +41,7 @@ class autosign::params {
       $pe_configpath  = '/etc/puppetlabs/puppetserver'
       $pe_logpath     = '/var/log/puppetlabs/puppetserver'
     }
-    default: { fail("::autosign::params cannot determine which gem provider to use with puppet version '${::puppetversion}'") }
+    default: { fail("::autosign::params cannot determine defaults for puppet version '${version}'") }
   }
 
   $ensure             = 'present'
