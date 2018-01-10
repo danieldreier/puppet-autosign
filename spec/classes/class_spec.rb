@@ -86,7 +86,7 @@ describe 'autosign' do
         it { is_expected.to contain_file('/etc/autosign1.conf').with_ensure('file') }
         it { is_expected.not_to contain_file('/var/lib/autosign/autosign.journal')}
         it { is_expected.not_to contain_file('/var/log/autosign.log')}
-        it { is_expected.to contain_file('/var/lib/autosign') }
+        it { is_expected.not_to contain_file('/var/lib/autosign') }
       end
     end
   end
