@@ -40,7 +40,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 6.0.0"
+      "version_requirement": ">= 4.0.0 < 6.0.0"
     }
   ],
   "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",

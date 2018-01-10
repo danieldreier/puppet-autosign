@@ -25,35 +25,15 @@ class autosign::params {
     }
   }
 
-  case pick($::pe_build, $::pe_server_version, $::puppetversion) {
-    /^3\.\d\.\d$/: {
-      $gem_provider = 'gem'
-      $user         = 'puppet'
-      $group        = 'puppet'
-    }
+  case pick($::pe_server_version, $::pe_build, $::puppetversion) {
     /^[45]\.\d+\.\d+$/: {
-      $gem_provider = 'puppet_gem'
+      # Normal versioning, assumed that the pe_build and pe_server_version don't
+      # exist
       $user         = 'puppet'
       $group        = 'puppet'
-    }
-    /^.*\(Puppet Enterprise 3\.\d+\.\d+\)$/: {
-      $gem_provider   = 'pe_gem'
-      $user           = 'pe-puppet'
-      $group          = 'pe-puppet'
-      $pe_journalpath = '/opt/puppetlabs/server/autosign'
-      $pe_configpath  = '/etc/puppetlabs/puppetserver'
-      $pe_logpath     = '/var/log/puppetlabs/puppetserver'
-    }
-    /^.*\(Puppet Enterprise \d+\.\d+\.\d+\)$/: {
-      $gem_provider   = 'puppet_gem'
-      $user           = 'pe-puppet'
-      $group          = 'pe-puppet'
-      $pe_journalpath = '/opt/puppetlabs/server/autosign'
-      $pe_configpath  = '/etc/puppetlabs/puppetserver'
-      $pe_logpath     = '/var/log/puppetlabs/puppetserver'
     }
     /^\d{4}\.\d+\.\d+$/: {
-      $gem_provider   = 'puppet_gem'
+      # Puppet enterprise versionsing: 20xx.y.z
       $user           = 'pe-puppet'
       $group          = 'pe-puppet'
       $pe_journalpath = '/opt/puppetlabs/server/autosign'
@@ -65,6 +45,7 @@ class autosign::params {
 
   $ensure             = 'present'
   $base_logpath       = '/var/log'
+  $gem_provider       = 'puppet_gem'
   $logpath            = pick($pe_logpath,     $base_logpath)
   $journalpath        = pick($pe_journalpath, $base_journalpath)
   $configpath         = pick($pe_configpath,  $base_configpath)
@@ -79,6 +60,10 @@ class autosign::params {
     'jwt_token' => {
       'validity'    => 7200,
       'journalfile' => "${journalpath}/autosign.journal",
+      # THIS IS NOT SECURE! It is marginally better than harcoding a password,
+      # but it can be replicated externaly to the Puppet Master.
+      # Please override this
+      'secret'      => fqdn_rand_string(30),
     },
   }
 

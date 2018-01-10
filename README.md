@@ -20,9 +20,19 @@ puppet module install danieldreier-autosign
 
 ### What autosign affects
 
-* Installs the autosign gem
-* Manages /etc/autosign.conf (or /usr/local/etc/autosign.conf on BSDs)
-* Creates /var/lib/autosign (or /var/autosign on BSDs)
+  - Installs the autosign gem
+  - Manages the autosign config file
+    - `/etc/puppetlabs/puppetserver/autosign.conf` *Puppet Enterprise*
+    - `/etc/autosign.conf` *Linux*
+    - `/usr/local/etc/autosign.conf` *BSDs*
+  - Creates journalfile and parent directory
+    - `/opt/puppetlabs/server/autosign/autosign.journal` *Puppet Enterprise*
+    - `/var/lib/autosign/autosign.journal` *Linux*
+    - `/var/autosign/autosign.journal` *BSDs*
+  - Manages logfile permissions
+    - `/var/log/puppetlabs/puppetserver/autosign.log` *Puppet Enterprise*
+    - `/var/log/autosign.log` *Linux*
+    - `/var/log/autosign.log` *BSDs*
 
 ### Setup Requirements
 
@@ -33,11 +43,9 @@ ini_setting {'policy-based autosigning':
   setting => 'autosign',
   path    => "${confdir}/puppet.conf",
   section => 'master',
-  value   => '/usr/local/bin/autosign-validator',
+  value   => '/opt/puppetlabs/puppet/bin/autosign-validator',
 }
 ```
-
-Note that if you're using the new AIO packaging, the path will probably be `/opt/puppetlabs/puppet/bin/autosign-validator` because it should be installed using the version of ruby bundled with Puppet. Puppet Enterprise will probably put it in `/opt/puppet/bin/autosign-validator`.
 
 ### Beginning with autosign
 
@@ -47,15 +55,16 @@ puppet module install danieldreier-autosign
 ```
 
 #### Basic manifest
+
 A Basic configuration might look like the following. Do not use the default password!
 
 ```puppet
-ini_setting {'policy-based autosigning':
+ini_setting { 'policy-based autosigning':
   setting => 'autosign',
   path    => "${confdir}/puppet.conf",
   section => 'master',
-  value   => '/usr/local/bin/autosign-validator',
-  notify  => Service['puppetmaster'],
+  value   => '/opt/puppetlabs/puppet/bin/autosign-validator',
+  notify  => Service['pe-puppetserver'],
 }
 
 class { ::autosign:
@@ -112,16 +121,40 @@ This module comes with the `generate_token` task which uses the `autosign genera
 
 Users wishing to generate tokens this way should run the task against the Puppet master and will receive the signing token as the result of the task. Running the `generate_token` task against any other node will fail.
 
+## Classes
+
+### `autosign`
+
+#### Parameters
+
+`package_name`: Name of the gem to install. Defaults to "autosign" and there's probably no reason to override it.
+
+`ensure`: Ensure parameter on the package to install. Set to "present", "latest", "absent", or a specific gem version.
+
+`configfile`: Path to the config file
+
+`user`: User that should own the files, this should be user that the Puppet server runs as.
+
+`group`: Group that should own the config files
+
+`journalpath`: Path to the journalfile, this will be managed as a directory, with the journalfile placed under it.
+
+`gem_provider`: Provide to use to the gem.
+
+`manage_journalfile`: Weather or not to manage the journalfile
+
+`manage_logfile`: Weather or not to manage the logfile
+
+`settings`: Hash of setting to use.
+
+
 ## Development
 
 Contributions are welcome. New functionality must have passing rspec test
 coverage in the PR, and should ideally also have beaker test coverage for
 major new functionality.
 
-For the time being, this module will remain compatible with both Puppet 3.x
-and 4.x. In the next 6-12 months, it will probably become a 4.x-only module.
-
-The primary development targets for this module are Puppet 3.x on Debian
+The primary development targets for this module are Puppet >= 4.x on Debian
 Wheezy, CentOS 7, and FreeBSD 10. New functionality that requires updates to
 `params.pp` should include relevant data for each of these platforms. If
 you want support for other platforms, please include test coverage in the PR.

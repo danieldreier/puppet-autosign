@@ -27,7 +27,7 @@ class autosign::config {
     }
   }
 
-  if $::autosign::manage_logfile {
+  if $::autosign::manage_journalfile {
     file {$settings['jwt_token']['journalfile']:
       ensure => 'file',
       mode   => '0640',
