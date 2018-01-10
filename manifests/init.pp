@@ -52,7 +52,7 @@ class autosign (
   String               $gem_provider       = $::autosign::params::gem_provider,
   Boolean              $manage_journalfile = $::autosign::params::manage_journalfile,
   Boolean              $manage_logfile     = $::autosign::params::manage_logfile,
-  Hash                 $settings           = {},
+  Hash                 $config             = {},
 ) inherits ::autosign::params {
   contain ::autosign::install
   contain ::autosign::config

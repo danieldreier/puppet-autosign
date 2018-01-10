@@ -53,7 +53,7 @@ class autosign::params {
   $configfile         = "${configpath}/autosign.conf"
   $manage_journalfile = true
   $manage_logfile     = true
-  $settings           = {
+  $config             = {
     'general'   => {
       'loglevel' => 'INFO',
       'logfile'  => "${logpath}/autosign.log",
@@ -63,7 +63,8 @@ class autosign::params {
       'journalfile' => "${journalpath}/autosign.journal",
       # THIS IS NOT SECURE! It is marginally better than harcoding a password,
       # but it can be replicated externaly to the Puppet Master.
-      # Please override this
+      # Please override this. It will also cause multi-master setups to not work
+      # correctly, all the more reason to override it.
       'secret'      => fqdn_rand_string(30),
     },
   }

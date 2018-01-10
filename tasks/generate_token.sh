@@ -1,30 +1,16 @@
 #!/bin/bash
 
-# Locations to look for the autosign executable
-executables=(
-    '/opt/puppetlabs/puppetserver/bin/autosign'
-    '/opt/puppetlabs/puppet/bin/autosign'
-    '/opt/puppet/bin/autosign'
-    '/usr/local/bin/autosign'
-)
+PATH="/opt/puppetlabs/puppetserver/bin:/opt/puppetlabs/puppet/bin:/opt/puppet/bin:/usr/local/bin:$PATH"
 
-# Look for the executable and pick the first one we find
-autosign="unknown"
-for executable in "${executables[@]}"
-do
-    if [[ -x "$executable" ]] ; then
-        autosign=$executable
-    fi
-done
 
 # If we couldn't find an execuatble exit with a nice error
-if [ "$autosign" = "unknown" ] ; then
+if ! command -v autosign > /dev/null 2>&1 ; then
     (>&2 echo "Autosign executable could not be found. Is this the Puppet master?")
     exit 1
 fi
 
 command=(
-    $autosign
+    autosign
     generate
     --bare
 )

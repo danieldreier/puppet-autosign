@@ -8,7 +8,7 @@ class autosign::config {
       default           => 'file',
   }
 
-  $settings = deep_merge($::autosign::params::settings, $::autosign::settings)
+  $settings = deep_merge($::autosign::params::config, $::autosign::config)
 
   file {$::autosign::configfile:
     ensure  => $config_ensure,

@@ -68,8 +68,8 @@ ini_setting { 'policy-based autosigning':
 }
 
 class { ::autosign:
-  ensure   => 'latest',
-  settings => {
+  ensure => 'latest',
+  config => {
     'general' => {
       'loglevel' => 'INFO',
     },
@@ -145,7 +145,7 @@ Users wishing to generate tokens this way should run the task against the Puppet
 
 `manage_logfile`: Weather or not to manage the logfile
 
-`settings`: Hash of setting to use.
+`config`: Hash of config to use.
 
 
 ## Development

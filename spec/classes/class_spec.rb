@@ -26,8 +26,8 @@ describe 'autosign' do
       context "on #{os}" do
         let(:facts) { os_facts }
         let(:params) {{
-          :ensure   => 'latest',
-          :settings => { 'jwt_token' => { 'secret' => 'hunter2' } },
+          :ensure => 'latest',
+          :config => { 'jwt_token' => { 'secret' => 'hunter2' } },
           }}
 
         it_behaves_like "base case"
