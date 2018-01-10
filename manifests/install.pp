@@ -15,11 +15,13 @@ class autosign::install {
       default           => 'directory',
   }
 
-  # the autosign key journal stores previously-used tokens to prevent re-use
-  file {$::autosign::journalpath:
-    ensure => $dir_ensure,
-    mode   => '0750',
-    owner  => $::autosign::user,
-    group  => $::autosign::group,
+  if $::autosign::manage_journalfile {
+    # the autosign key journal stores previously-used tokens to prevent re-use
+    file {$::autosign::journalpath:
+      ensure => $dir_ensure,
+      mode   => '0750',
+      owner  => $::autosign::user,
+      group  => $::autosign::group,
+    }
   }
 }

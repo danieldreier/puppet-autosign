@@ -4,61 +4,69 @@
 # It sets variables according to platform.
 #
 class autosign::params {
-
-  $ensure = 'present'
   case $::osfamily {
     'Debian', 'Ubuntu': {
-      $package_name = 'autosign'
-      $configfile   = '/etc/autosign.conf'
-      $journalpath  = '/var/lib/autosign'
+      $package_name     = 'autosign'
+      $base_configpath  = '/etc'
+      $base_journalpath = '/var/lib/autosign'
     }
     'RedHat', 'Amazon', 'sles', 'opensuse', 'OracleLinux', 'fedora': {
-      $package_name = 'autosign'
-      $configfile   = '/etc/autosign.conf'
-      $journalpath  = '/var/lib/autosign'
+      $package_name     = 'autosign'
+      $base_configpath  = '/etc'
+      $base_journalpath = '/var/lib/autosign'
     }
     'freebsd', 'openbsd': {
-      $package_name = 'autosign'
-      $configfile   = '/usr/local/etc/autosign.conf'
-      $journalpath  = '/var/autosign'
+      $package_name     = 'autosign'
+      $base_configpath  = '/usr/local/etc'
+      $base_journalpath = '/var/autosign'
     }
     default: {
       fail("${::operatingsystem} not supported")
     }
   }
 
-  case $::puppetversion {
-    /^3\.\d\.\d$/: {
-      $gem_provider = 'gem'
-      $user = 'puppet'
-      $group = 'puppet'
-    }
+  $version = pick($::pe_server_version, $::pe_build, $::puppetversion)
+  case $version {
     /^[45]\.\d+\.\d+$/: {
-      $gem_provider = 'puppet_gem'
-      $user = 'puppet'
-      $group = 'puppet'
+      # Normal versioning, assumed that the pe_build and pe_server_version don't
+      # exist
+      $user         = 'puppet'
+      $group        = 'puppet'
     }
-    /^.*\(Puppet Enterprise 3\.\d+\.\d+\)$/: {
-      $gem_provider = 'pe_gem'
-      $group = 'pe-puppet'
+    /^\d{4}\.\d+\.\d+$/: {
+      # Puppet enterprise versionsing: 20xx.y.z
+      $user           = 'pe-puppet'
+      $group          = 'pe-puppet'
+      $pe_journalpath = '/opt/puppetlabs/server/autosign'
+      $pe_configpath  = '/etc/puppetlabs/puppetserver'
+      $pe_logpath     = '/var/log/puppetlabs/puppetserver'
     }
-    /^.*\(Puppet Enterprise \d+\.\d+\.\d+\)$/: {
-      $gem_provider = 'puppet_gem'
-      $group = 'pe-puppet'
-    }
-    default: { fail("::autosign::params cannot determine which gem provider to use with puppet version '${::puppetversion}'") }
+    default: { fail("::autosign::params cannot determine defaults for puppet version '${version}'") }
   }
 
-  $settings = {
-    'general' =>
-      {
-        'loglevel' => 'INFO',
-        'logfile'  => '/var/log/autosign.log',
-      },
-    'jwt_token' =>
-    {
+  $ensure             = 'present'
+  $base_logpath       = '/var/log'
+  $gem_provider       = 'puppet_gem'
+  $logpath            = pick($pe_logpath,     $base_logpath)
+  $journalpath        = pick($pe_journalpath, $base_journalpath)
+  $configpath         = pick($pe_configpath,  $base_configpath)
+  $configfile         = "${configpath}/autosign.conf"
+  $manage_journalfile = true
+  $manage_logfile     = true
+  $config             = {
+    'general'   => {
+      'loglevel' => 'INFO',
+      'logfile'  => "${logpath}/autosign.log",
+    },
+    'jwt_token' => {
       'validity'    => 7200,
       'journalfile' => "${journalpath}/autosign.journal",
-    }
+      # THIS IS NOT SECURE! It is marginally better than harcoding a password,
+      # but it can be replicated externaly to the Puppet Master.
+      # Please override this. It will also cause multi-master setups to not work
+      # correctly, all the more reason to override it.
+      'secret'      => fqdn_rand_string(30),
+    },
   }
+
 }

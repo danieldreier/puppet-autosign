@@ -1,59 +1,38 @@
 ---
+sudo: false
+dist: trusty
 language: ruby
 cache: bundler
-sudo: false
 before_install:
+  - bundle -v
   - rm Gemfile.lock || true
-  - gem install bundler --pre
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec rake $CHECK'
+bundler_args: --without system_tests
 rvm:
-  - 1.9.3
-  - jruby-19mode
-  - 2.0.0
-  - 2.1.0
-  - 2.2.0
-  - 2.3.0
-script: bundle exec rake test
+  - 2.4.1
+  - 2.1.9
 env:
-  - PUPPET_VERSION="~> 3.3.0"
-  - PUPPET_VERSION="~> 3.4.0"
-  - PUPPET_VERSION="~> 3.5.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 3.6.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 3.7.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 3.8.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
-  - PUPPET_VERSION="~> 4.0.0" STRICT_VARIABLES=yes
+  - PUPPET_GEM_VERSION="~> 4.0"  STRICT_VARIABLES=no CHECK=spec
+  - PUPPET_GEM_VERSION="~> 4.4"  STRICT_VARIABLES=no CHECK=spec
+  - PUPPET_GEM_VERSION="~> 4.5"  STRICT_VARIABLES=no CHECK=spec
+  - PUPPET_GEM_VERSION="~> 4.7"  STRICT_VARIABLES=no CHECK=spec
+  - PUPPET_GEM_VERSION="~> 4.10" STRICT_VARIABLES=no CHECK=spec
+  - PUPPET_GEM_VERSION="~> 5.3"  STRICT_VARIABLES=no CHECK=spec
 matrix:
-  #Exclusions according to https://docs.puppet.com/guides/platforms.html#ruby-versions
-  exclude:
-    #Ruby 2.1.0
-  - rvm: 2.1.0
-    env: PUPPET_VERSION="~> 3.3.0"
-  - rvm: 2.1.0
-    env: PUPPET_VERSION="~> 3.4.0"
-
-    #Ruby 2.2.0
-  - rvm: 2.2.0
-    env: PUPPET_VERSION="~> 3.3.0"
-  - rvm: 2.2.0
-    env: PUPPET_VERSION="~> 3.4.0"
-  - rvm: 2.2.0
-    env: PUPPET_VERSION="~> 3.5.0" STRICT_VARIABLES=yes
-  - rvm: 2.2.0
-    env: PUPPET_VERSION="~> 3.6.0" STRICT_VARIABLES=yes
-  - rvm: 2.2.0
-    env: PUPPET_VERSION="~> 3.7.0" STRICT_VARIABLES=yes
-  - rvm: 2.2.0
-    env: PUPPET_VERSION="~> 3.8.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
-
-    #Ruby 2.3.0
-  - rvm: 2.3.0
-    env: PUPPET_VERSION="~> 3.3.0"
-  - rvm: 2.3.0
-    env: PUPPET_VERSION="~> 3.4.0"
-  - rvm: 2.3.0
-    env: PUPPET_VERSION="~> 3.5.0" STRICT_VARIABLES=yes
-  - rvm: 2.3.0
-    env: PUPPET_VERSION="~> 3.6.0" STRICT_VARIABLES=yes
-  - rvm: 2.3.0
-    env: PUPPET_VERSION="~> 3.7.0" STRICT_VARIABLES=yes
-  - rvm: 2.3.0
-    env: PUPPET_VERSION="~> 3.8.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
+  fast_finish: true
+  include:
+    -
+      env: CHECK="syntax lint"
+    -
+      env: CHECK=metadata_lint
+branches:
+  only:
+    - master
+    - /^v\d/
+notifications:
+  email: false
