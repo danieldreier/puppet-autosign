@@ -3,7 +3,7 @@
 PATH="/opt/puppetlabs/puppetserver/bin:/opt/puppetlabs/puppet/bin:/opt/puppet/bin:/usr/local/bin:$PATH"
 
 
-# If we couldn't find an execuatble exit with a nice error
+# If we couldn't find an executable exit with a nice error
 if ! command -v autosign > /dev/null 2>&1 ; then
     (>&2 echo "Autosign executable could not be found. Is this the Puppet master?")
     exit 1
@@ -15,7 +15,7 @@ command=(
     --bare
 )
 
-# Set the token ot be reusable if required
+# Set the token to be reusable if required
 if [ "$PT_reusable" = "true" ] ; then
     command+=('--reusable')
 else
