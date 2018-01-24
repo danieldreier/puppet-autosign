@@ -9,7 +9,7 @@
       "type": "Optional[Boolean]"
     },
     "validfor": {
-      "description": "autosign token validity period (default: 7200)",
+      "description": "autosign token validity period in seconds (default: 7200)",
       "type": "Optional[Integer]"
     },
     "certname": {
