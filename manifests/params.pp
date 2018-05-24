@@ -27,12 +27,6 @@ class autosign::params {
 
   $version = pick($::pe_server_version, $::pe_build, $::puppetversion)
   case $version {
-    /^[4-6]\.\d+\.\d+$/: {
-      # Normal versioning, assumed that the pe_build and pe_server_version don't
-      # exist
-      $user         = 'puppet'
-      $group        = 'puppet'
-    }
     /^\d{4}\.\d+\.\d+$/: {
       # Puppet enterprise versionsing: 20xx.y.z
       $user           = 'pe-puppet'
@@ -40,6 +34,11 @@ class autosign::params {
       $pe_journalpath = '/opt/puppetlabs/server/autosign'
       $pe_configpath  = '/etc/puppetlabs/puppetserver'
       $pe_logpath     = '/var/log/puppetlabs/puppetserver'
+    }
+    /^\d+\.\d+\.\d+$/: {
+      # Normal versioning, assuming pe_build and pe_server_version don't exist
+      $user  = 'puppet'
+      $group = 'puppet'
     }
     default: { fail("::autosign::params cannot determine defaults for puppet version '${version}'") }
   }
