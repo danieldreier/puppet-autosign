@@ -27,7 +27,7 @@ class autosign::params {
 
   $version = pick($::pe_server_version, $::pe_build, $::puppetversion)
   case $version {
-    /^[45]\.\d+\.\d+$/: {
+    /^[4-6]\.\d+\.\d+$/: {
       # Normal versioning, assumed that the pe_build and pe_server_version don't
       # exist
       $user         = 'puppet'
