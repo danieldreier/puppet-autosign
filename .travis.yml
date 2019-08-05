@@ -15,12 +15,7 @@ script:
 bundler_args: --without system_tests
 rvm:
   - 2.4.1
-  - 2.1.9
 env:
-  - PUPPET_GEM_VERSION="~> 4.0"  STRICT_VARIABLES=no CHECK=spec
-  - PUPPET_GEM_VERSION="~> 4.4"  STRICT_VARIABLES=no CHECK=spec
-  - PUPPET_GEM_VERSION="~> 4.5"  STRICT_VARIABLES=no CHECK=spec
-  - PUPPET_GEM_VERSION="~> 4.7"  STRICT_VARIABLES=no CHECK=spec
   - PUPPET_GEM_VERSION="~> 4.10" STRICT_VARIABLES=no CHECK=spec
   - PUPPET_GEM_VERSION="~> 5.3"  STRICT_VARIABLES=no CHECK=spec
 matrix:
