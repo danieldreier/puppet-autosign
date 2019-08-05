@@ -29,14 +29,21 @@ describe 'autosign' do
           :ensure => 'latest',
           :config => { 'jwt_token' => { 'secret' => 'hunter2' } },
           }}
+        if ['FreeBSD', 'OpenBSD'].include?(os_facts[:osfamily])
+          base_configpath = '/usr/local/etc'
+          base_journalpath = '/var/autosign'
+        else
+          base_configpath = '/etc'
+          base_journalpath = '/var/lib/autosign'
+        end
 
         it_behaves_like "base case"
 
         it { is_expected.to contain_package('autosign').with_ensure('latest') }
-        it { is_expected.to contain_file('/etc/autosign.conf').with_ensure('file') }
-        it { is_expected.to contain_file('/var/lib/autosign/autosign.journal').with_ensure('file') }
+        it { is_expected.to contain_file("#{base_configpath}/autosign.conf").with_ensure('file') }
+        it { is_expected.to contain_file("#{base_journalpath}/autosign.journal").with_ensure('file') }
         it { is_expected.to contain_file('/var/log/autosign.log').with_ensure('file') }
-        it { is_expected.to contain_file('/var/lib/autosign') }
+        it { is_expected.to contain_file(base_journalpath) }
       end
     end
   end
