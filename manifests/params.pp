@@ -52,6 +52,7 @@ class autosign::params {
   $configfile         = "${configpath}/autosign.conf"
   $manage_journalfile = true
   $manage_logfile     = true
+  $manage_package     = true
   $config             = {
     'general'   => {
       'loglevel' => 'INFO',

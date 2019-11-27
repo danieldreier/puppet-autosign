@@ -97,4 +97,17 @@ describe 'autosign' do
       end
     end
   end
+
+  context "autosign class with manage_package=false" do
+    on_supported_os.each do |os, os_facts|
+      context "on #{os}" do
+        let(:facts) { os_facts }
+        let(:params) {{
+          :manage_package => false,
+        }}
+
+        it { is_expected.not_to contain_package('autosign') }
+      end
+    end
+  end
 end
