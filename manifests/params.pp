@@ -53,7 +53,7 @@ class autosign::params {
   $manage_journalfile = true
   $manage_logfile     = true
   $manage_package     = true
-  $config             = {
+  $config             = Sensitive.new({
     'general'   => {
       'loglevel' => 'INFO',
       'logfile'  => "${logpath}/autosign.log",
@@ -67,6 +67,6 @@ class autosign::params {
       # correctly, all the more reason to override it.
       'secret'      => fqdn_rand_string(30),
     },
-  }
+  })
 
 }

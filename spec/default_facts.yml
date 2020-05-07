@@ -2,7 +2,12 @@
 #
 # Facts specified here will override the values provided by rspec-puppet-facts.
 ---
-concat_basedir: "/tmp"
+pe_server_version: null
+pe_logpath: null
+pe_journalpath: null
+pe_configpath: null
+pe_build: null
 ipaddress: "172.16.254.254"
+ipaddress6: "FE80:0000:0000:0000:AAAA:AAAA:AAAA"
 is_pe: false
 macaddress: "AA:AA:AA:AA:AA:AA"
