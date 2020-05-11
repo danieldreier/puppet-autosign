@@ -53,7 +53,7 @@ class autosign (
   Boolean              $manage_journalfile = $::autosign::params::manage_journalfile,
   Boolean              $manage_logfile     = $::autosign::params::manage_logfile,
   Boolean              $manage_package     = $::autosign::params::manage_package,
-  Hash                 $config             = {},
+  Variant[Sensitive[Hash], Hash] $config   = {},
 ) inherits ::autosign::params {
   contain ::autosign::install
   contain ::autosign::config

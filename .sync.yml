@@ -5,3 +5,10 @@ Gemfile:
   required:
     ':development':
       - gem: autosign
+spec/default_facts.yml:
+  extra_facts:
+    pe_server_version: null
+    pe_logpath: null
+    pe_journalpath: null
+    pe_configpath: null
+    pe_build: null    
