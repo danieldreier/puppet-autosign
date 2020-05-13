@@ -16,7 +16,8 @@ describe 'autosign' do
         let(:params) { {} }
 
         it_behaves_like 'base case'
-        it { is_expected.to contain_package('autosign').with_ensure('present') }
+        it { is_expected.to contain_package('autosign via puppet_gem').with_ensure('present') }
+        it { is_expected.to contain_package('autosign via puppetserver_gem').with_ensure('present') }
       end
     end
   end
@@ -28,6 +29,8 @@ describe 'autosign' do
         let(:params) do
           {
             ensure: 'latest',
+            puppetserver_ensure: 'latest',
+            gem_source: 'https://rubygems.org',
             config: { 'jwt_token' => { 'secret' => 'hunter2' } },
           }
         end
@@ -42,7 +45,16 @@ describe 'autosign' do
 
         it_behaves_like 'base case'
 
-        it { is_expected.to contain_package('autosign').with_ensure('latest') }
+        it do
+          is_expected.to contain_package('autosign via puppet_gem')
+            .with('ensure' => 'latest',
+                  'source' => 'https://rubygems.org')
+        end
+        it do
+          is_expected.to contain_package('autosign via puppetserver_gem')
+            .with('ensure' => 'latest',
+                  'source' => 'https://rubygems.org')
+        end
         it { is_expected.to contain_file("#{base_configpath}/autosign.conf").with_ensure('file') }
         it { is_expected.to contain_file("#{base_journalpath}/autosign.journal").with_ensure('file') }
         it { is_expected.to contain_file('/var/log/autosign.log').with_ensure('file') }
@@ -60,7 +72,7 @@ describe 'autosign' do
         }
       end
 
-      it { expect { is_expected.to contain_package('autosign') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
+      it { expect { is_expected.to contain_package('autosign via puppet_gem') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
     end
   end
 
@@ -73,7 +85,8 @@ describe 'autosign' do
         let(:params) { {} }
 
         it_behaves_like 'base case'
-        it { is_expected.to contain_package('autosign').with_ensure('present') }
+        it { is_expected.to contain_package('autosign via puppet_gem').with_ensure('present') }
+        it { is_expected.to contain_package('autosign via puppetserver_gem').with_ensure('present') }
         it { is_expected.to contain_file('/var/log/puppetlabs/puppetserver/autosign.log').with_ensure('file') }
         it { is_expected.to contain_file('/etc/puppetlabs/puppetserver/autosign.conf').with_ensure('file') }
         it { is_expected.to contain_file('/opt/puppetlabs/server/autosign/autosign.journal').with_ensure('file') }
@@ -96,7 +109,7 @@ describe 'autosign' do
         end
 
         it_behaves_like 'base case'
-        it { is_expected.to contain_package('autosign').with_ensure('0.1.0') }
+        it { is_expected.to contain_package('autosign via puppet_gem').with_ensure('0.1.0') }
         it { is_expected.to contain_file('/etc/autosign1.conf').with_ensure('file') }
         it { is_expected.not_to contain_file('/var/lib/autosign/autosign.journal') }
         it { is_expected.not_to contain_file('/var/log/autosign.log') }
@@ -115,7 +128,7 @@ describe 'autosign' do
           }
         end
 
-        it { is_expected.not_to contain_package('autosign') }
+        it { is_expected.not_to contain_package('autosign via puppet_gem') }
       end
     end
   end

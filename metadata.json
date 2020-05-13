@@ -11,6 +11,10 @@
     {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 4.0.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs-puppetserver_gem",
+      "version_requirement": ">= 1.1.1 < 2.0.0"
     }
   ],
   "operatingsystem_support": [
