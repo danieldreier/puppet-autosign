@@ -9,7 +9,7 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-class { ::autosign:
+class { '::autosign':
   ensure   => 'latest',
   settings => { 'jwt_token' => { 'secret' => 'hunter2' } },
 }

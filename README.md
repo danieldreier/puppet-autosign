@@ -74,7 +74,7 @@ class { ::autosign:
       'loglevel' => 'INFO',
     },
     'jwt_token' => {
-      'secret'   => 'hunter2'
+      'secret'   => 'hunter2',
       'validity' => '7200',
     }
   },

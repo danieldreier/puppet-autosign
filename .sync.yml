@@ -5,6 +5,21 @@ Gemfile:
   required:
     ':development':
       - gem: autosign
+.gitlab-ci.yml:
+  delete: true
+.travis.yml:
+  includes:
+    - env: PUPPET_GEM_VERSION="~> 4.10" CHECK=parallel_spec
+      rvm: 2.4.9
+      stage: spec  
+    -
+      env: PUPPET_GEM_VERSION="~> 5.5" CHECK=parallel_spec
+      rvm: 2.4.9
+      stage: spec  
+.vscode/extensions.json:
+  unmanaged: false
+appveyor.yml:
+  delete: true
 spec/default_facts.yml:
   extra_facts:
     pe_server_version: null
