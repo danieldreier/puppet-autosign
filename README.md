@@ -61,7 +61,7 @@ A Basic configuration might look like the following. Do not use the default pass
 ```puppet
 ini_setting { 'policy-based autosigning':
   setting => 'autosign',
-  path    => "${confdir}/puppet.conf",
+  path    => "${::settings::confdir}/puppet.conf",
   section => 'master',
   value   => '/opt/puppetlabs/puppet/bin/autosign-validator',
   notify  => Service['pe-puppetserver'],
@@ -80,7 +80,8 @@ class { ::autosign:
   },
 }
 ```
-
+**NOTE** You may also want to add a notify parameter as well to restart the puppetserver.
+         `notify => Service['pe-puppetserver'] or notify => Service['puppetserver']`
 ## Usage
 
 The `autosign::gen_autosign_token()` function allows you to generate temporary autosign
