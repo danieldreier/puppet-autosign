@@ -1,7 +1,3 @@
-require 'autosign'
-require 'socket'
-require 'logging'
-
 module Puppet::Parser::Functions
   newfunction(:gen_autosign_token, type: :rvalue, doc: <<-EOS
     Generate a JWT autosign token for use with the autosign gem's
@@ -10,8 +6,18 @@ module Puppet::Parser::Functions
     Requires a boolean hostname string as input. Token validity, the secret
     used to sign the token, and other settings are determined by settings in
     autosign.conf.
+
+    This function is deprecated, please use autosign::gen_autosign_token().
     EOS
              ) do |arguments|
+    Puppet.warning('gen_autosign_token() is deprecated and will be removed in next release, please use the autosign::gen_autosign_token() instead')
+    begin
+      require 'autosign'
+      require 'socket'
+      require 'logging'
+    rescue LoadError
+      raise(Puppet::Error, "Attempting to use gen_autosign_token() without the autosign gem.\nPlease run: puppetserver gem install autosign")
+    end
     @logger = Logging.logger['Autosign']
     @logger.level = :info
     @logger.add_appenders Logging.appenders.stdout
