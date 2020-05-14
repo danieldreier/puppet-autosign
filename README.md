@@ -61,7 +61,7 @@ A Basic configuration might look like the following. Do not use the default pass
 ```puppet
 ini_setting { 'policy-based autosigning':
   setting => 'autosign',
-  path    => "${confdir}/puppet.conf",
+  path    => "${::settings::confdir}/puppet.conf",
   section => 'master',
   value   => '/opt/puppetlabs/puppet/bin/autosign-validator',
   notify  => Service['pe-puppetserver'],
@@ -80,28 +80,29 @@ class { ::autosign:
   },
 }
 ```
-
+**NOTE** You may also want to add a notify parameter as well to restart the puppetserver.
+         `notify => Service['pe-puppetserver'] or notify => Service['puppetserver']`
 ## Usage
 
-The `gen_autosign_token` function allows you to generate temporary autosign
+The `autosign::gen_autosign_token()` function allows you to generate temporary autosign
 tokens in puppet. The syntax is:
 
 ```puppet
 # return a one-time token that is only valid for the foo.example.com certname
 # for the default validity as configured above.
-gen_autosign_token('foo.example.com')
+autosign::gen_autosign_token('foo.example.com')
 
 # return a one-time token that is only valid for foo.example.com for the
 # next 3600 seconds.
-gen_autosign_token('foo.example.com', 3600)
+autosign::gen_autosign_token('foo.example.com', 3600)
 
 # return a one-time token that is valid for any certname matching the regex
 # ^.*\.example\.com$ for the default validity period.
-gen_autosign_token('/^.*\.example\.com$/')
+autosign::gen_autosign_token('/^.*\.example\.com$/')
 
 # return a one-time token that is valid for any certname matching the regex
 # ^.*\.example\.com$ for the next week (604800 seconds).
-gen_autosign_token('/.*\.example\.com/', 604800)
+autosign::gen_autosign_token('/.*\.example\.com/', 604800)
 ```
 
 Each of these will return a string which should be added to the
