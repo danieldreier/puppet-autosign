@@ -6,9 +6,19 @@ class autosign::install {
 
   # install the autosign gem
   if $::autosign::manage_package {
-    package { $::autosign::package_name:
-      ensure   => $::autosign::ensure,
-      provider => $::autosign::gem_provider,
+    package {
+      default:
+        name   => $::autosign::package_name,
+        source => $::autosign::gem_source
+      ;
+      'autosign via puppet_gem':
+        ensure   => $::autosign::ensure,
+        provider => $::autosign::gem_provider,
+      ;
+      'autosign via puppetserver_gem':
+        ensure   => $::autosign::puppetserver_ensure,
+        provider => 'puppetserver_gem',
+      ;
     }
   }
 
