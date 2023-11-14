@@ -4,7 +4,7 @@
 # It sets variables according to platform.
 #
 class autosign::params {
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian', 'Ubuntu': {
       $package_name     = 'autosign'
       $base_configpath  = '/etc'
@@ -21,11 +21,11 @@ class autosign::params {
       $base_journalpath = '/var/autosign'
     }
     default: {
-      fail("${::operatingsystem} not supported")
+      fail("${facts['os']['name']} not supported")
     }
   }
 
-  $version = pick($::pe_server_version, $::pe_build, $::puppetversion)
+  $version = pick($facts['pe_server_version'], $facts['pe_build'], $puppetversion)
   case $version {
     /^\d{4}\.\d+\.\d+$/: {
       # Puppet enterprise versionsing: 20xx.y.z
@@ -37,8 +37,11 @@ class autosign::params {
     }
     /^\d+\.\d+\.\d+$/: {
       # Normal versioning, assuming pe_build and pe_server_version don't exist
-      $user  = 'puppet'
-      $group = 'puppet'
+      $user           = 'puppet'
+      $group          = 'puppet'
+      $pe_journalpath = undef
+      $pe_configpath  = undef
+      $pe_logpath     = undef
     }
     default: { fail("::autosign::params cannot determine defaults for puppet version '${version}'") }
   }
