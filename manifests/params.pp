@@ -57,19 +57,18 @@ class autosign::params {
   $manage_logfile     = true
   $manage_package     = true
   $config             = Sensitive.new({
-    'general'   => {
-      'loglevel' => 'INFO',
-      'logfile'  => "${logpath}/autosign.log",
-    },
-    'jwt_token' => {
-      'validity'    => 7200,
-      'journalfile' => "${journalpath}/autosign.journal",
-      # THIS IS NOT SECURE! It is marginally better than harcoding a password,
-      # but it can be replicated externaly to the Puppet Master.
-      # Please override this. It will also cause multi-master setups to not work
-      # correctly, all the more reason to override it.
-      'secret'      => fqdn_rand_string(30),
-    },
+      'general'   => {
+        'loglevel' => 'INFO',
+        'logfile'  => "${logpath}/autosign.log",
+      },
+      'jwt_token' => {
+        'validity'    => 7200,
+        'journalfile' => "${journalpath}/autosign.journal",
+        # THIS IS NOT SECURE! It is marginally better than harcoding a password,
+        # but it can be replicated externaly to the Puppet Master.
+        # Please override this. It will also cause multi-master setups to not work
+        # correctly, all the more reason to override it.
+        'secret'      => fqdn_rand_string(30),
+      },
   })
-
 }

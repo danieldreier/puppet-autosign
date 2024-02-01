@@ -5,7 +5,7 @@
 # @summary Installs and configures the autosign gem.
 #
 # @example Declaring the class
-#   class { ::autosign:
+#   class { autosign:
 #     ensure   => 'latest',
 #     settings => {
 #       'general' => {
@@ -24,6 +24,10 @@
 # @param ensure Ensure parameter on the package to install. Set to "present",
 #   "latest", "absent", or a specific gem version.
 #
+# @param puppetserver_ensure The ensure parameter for puppetserver gem
+#
+# @param gem_source Optional gem source
+#
 # @param configfile Path to the config file
 #
 # @param user User that should own the files, this should be user that the
@@ -40,26 +44,28 @@
 #
 # @param manage_logfile Weather or not to manage the logfile
 #
-# @param settings Hash of setting to use.
+# @param manage_package Whether or not to manage the package
+#
+# @param config Hash of setting to use.
 #
 class autosign (
-  String               $ensure              = $::autosign::params::ensure,
+  String               $ensure              = $autosign::params::ensure,
   String               $puppetserver_ensure = 'present',
   Optional[String]     $gem_source          = undef,
-  String               $package_name        = $::autosign::params::package_name,
-  Stdlib::Absolutepath $configfile          = $::autosign::params::configfile,
-  String               $user                = $::autosign::params::user,
-  String               $group               = $::autosign::params::group,
-  Stdlib::Absolutepath $journalpath         = $::autosign::params::journalpath,
-  String               $gem_provider        = $::autosign::params::gem_provider,
-  Boolean              $manage_journalfile  = $::autosign::params::manage_journalfile,
-  Boolean              $manage_logfile      = $::autosign::params::manage_logfile,
-  Boolean              $manage_package      = $::autosign::params::manage_package,
+  String               $package_name        = $autosign::params::package_name,
+  Stdlib::Absolutepath $configfile          = $autosign::params::configfile,
+  String               $user                = $autosign::params::user,
+  String               $group               = $autosign::params::group,
+  Stdlib::Absolutepath $journalpath         = $autosign::params::journalpath,
+  String               $gem_provider        = $autosign::params::gem_provider,
+  Boolean              $manage_journalfile  = $autosign::params::manage_journalfile,
+  Boolean              $manage_logfile      = $autosign::params::manage_logfile,
+  Boolean              $manage_package      = $autosign::params::manage_package,
   Variant[Sensitive[Hash], Hash] $config    = {},
-) inherits ::autosign::params {
-  contain ::autosign::install
-  contain ::autosign::config
+) inherits autosign::params {
+  contain autosign::install
+  contain autosign::config
 
-  Class['::autosign::install']
-  -> Class['::autosign::config']
+  Class['autosign::install']
+  -> Class['autosign::config']
 }
