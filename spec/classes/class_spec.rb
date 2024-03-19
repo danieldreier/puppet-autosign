@@ -67,8 +67,7 @@ describe 'autosign' do
     describe 'autosign class without any parameters on Solaris/Nexenta' do
       let(:facts) do
         {
-          osfamily: 'Solaris',
-          operatingsystem: 'Nexenta',
+          os: { family: 'Solaris', name: 'Nexenta' },
         }
       end
 

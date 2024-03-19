@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 4.0.0 < 7.0.0"
+      "version_requirement": ">= 4.0.0 < 10.0.0"
     },
     {
       "name": "puppetlabs-puppetserver_gem",
@@ -36,15 +36,16 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6",
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.6.0 < 7.0.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
   "template-url": "https://github.com/puppetlabs/pdk-templates#master",
